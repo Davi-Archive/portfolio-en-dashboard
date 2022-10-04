@@ -35,9 +35,8 @@ const Header = () => {
           <Tabs
             textColor="inherit"
             value={value} onChange={(e, val) => setValue(val)}>
-            <Tab LinkComponent={Link} to="/blogs" label="All Blogs" />
-            <Tab LinkComponent={Link} to="/myBlogs" label="My Blogs" />
-            <Tab LinkComponent={Link} to="/blogs/add" label="Add Blog" />
+            <Tab LinkComponent={Link} to="/" label="View" />
+            <Tab LinkComponent={Link} to="/" label="Add new" />
           </Tabs>
         </Box>}
         <Box display="flex" marginLeft="auto">
@@ -63,7 +62,7 @@ const Header = () => {
           </Button>}
         </Box>
       </Toolbar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent">
         <Toolbar
           sx={{
             display: 'flex',

@@ -9,40 +9,41 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Link } from 'react-router-dom'
 
 export const mainListItems = (
     <React.Fragment>
-        <ListItemButton>
+        <ListItemButton LinkComponent={Link} to="/about">
             <ListItemIcon>
                 <DashboardIcon />
             </ListItemIcon>
             <ListItemText primary="About" />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton LinkComponent={Link} to="/work">
             <ListItemIcon>
                 <ShoppingCartIcon />
             </ListItemIcon>
             <ListItemText primary="Work" />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton LinkComponent={Link} to="/skills">
             <ListItemIcon>
                 <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Skills" />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton LinkComponent={Link} to="/testimonials">
             <ListItemIcon>
                 <BarChartIcon />
             </ListItemIcon>
             <ListItemText primary="Testimonials" />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton LinkComponent={Link} to="/experiences">
             <ListItemIcon>
                 <LayersIcon />
             </ListItemIcon>
             <ListItemText primary="Experiences" />
         </ListItemButton>
-        <ListItemButton>
+        <ListItemButton LinkComponent={Link} to="/form">
             <ListItemIcon>
                 <LayersIcon />
             </ListItemIcon>
