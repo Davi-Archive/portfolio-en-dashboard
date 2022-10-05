@@ -13,20 +13,22 @@ import {
   Divider,
 } from '@mui/material'
 import { Link } from 'react-router-dom'
-import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, secondaryListItems } from '../components/listItems';
+import { logoutRender, reset } from '../features/auth/authSlice'
 
 const Header = () => {
   const [value, setValue] = useState(0)
   const dispatch = useDispatch()
-  /* const isLoggedIn = useSelector(state => state.isLoggedIn) */
-  const isLoggedIn = true;
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
-  return (
 
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn)
+
+  const logoutHandler = () => {
+    localStorage.removeItem('userId')
+    localStorage.removeItem('user')
+    dispatch(logoutRender()).then(dispatch(reset())).then(navigate('/')).then(navigate('/login'))
+  }
+
+  return (
     <AppBar sx={{
       background: 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(98,98,255,1) 0%, rgba(0,212,255,1) 100%)',
     }}>
@@ -54,8 +56,8 @@ const Header = () => {
             </Button> */}
           </>}
           {isLoggedIn && <Button
-            onClick={() => dispatch(logout())}
-            LinkComponent={Link} to="/logout"
+            onClick={logoutHandler}
+            LinkComponent={Link} to="/"
             variant='contained'
             sx={{ margin: 1, borderRadius: 10 }}
             color='warning'>Logout

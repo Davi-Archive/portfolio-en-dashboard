@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,9 +12,11 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
-import { login, reset } from '../features/auth/authSlice'
+import { login, reset, loginRender } from '../features/auth/authSlice'
+import { toast } from 'react-toastify'
+import Spinner from '../components/Spinner';
 
 function Copyright(props) {
     return (
@@ -34,6 +36,25 @@ const theme = createTheme();
 export default function Login() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const { user, isLoading, isError, isSuccess, message } = useSelector(
+        (state) => state.auth
+    )
+
+    useEffect(() => {
+        if (isLoading){
+            <Spinner />
+        }
+        if (isError) {
+            toast.error(message)
+        }
+
+        if (user) {
+            dispatch(loginRender())
+        }
+
+        dispatch(reset())
+    }, [user, isError, isSuccess, message, navigate, dispatch])
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -42,7 +63,6 @@ export default function Login() {
             password: data.get('password'),
         };
         dispatch(login(userData))
-        console.log(userData)
     };
 
     return (

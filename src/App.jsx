@@ -1,6 +1,6 @@
 import { ToastContainer } from 'react-toastify'
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-
+import { useEffect } from 'react';
 import Header from "./components/Header";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
@@ -11,11 +11,25 @@ import Testimonials from './pages/Testimonials';
 import Experiences from './pages/Experiences';
 import Form from './pages/Form';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useSelector,useDispatch } from 'react-redux'
+import { logoutRender } from './features/auth/authSlice'
 
 
 function App() {
-  const isLoggedIn = false
+  const dispatch = useDispatch();
+  const { user, isLoading, isError, isSuccess, message, isLoggedIn } = useSelector(
+    (state) => state.auth)
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+
+    if (!localStorage.getItem("user")) {
+      dispatch(logoutRender())
+    }
+  }, [user])
+
   return (
     <>
       <div>
@@ -29,7 +43,6 @@ function App() {
               <main>
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
-                  <Route path="/login" element={<Login />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/work" element={<Work />} />
                   <Route path="/skills" element={<Skills />} />
