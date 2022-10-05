@@ -13,6 +13,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { motion } from 'framer-motion'
+import "./Form.scss";
 
 const dataBlog = [
     {
@@ -51,13 +53,14 @@ export const About = () => {
         return data; */
     }
     return (
-        <div>
+        <div className='wrapper'>
             {""}
-            {dataBlog.map((item, index) => (
-                <Box key={index} marginTop={10}>
+            {dataBlog.map((about, index) => (
+                <Box key={index} marginTop={10} marginRight={3}>
                     <Card sx={{
-                        width: "auto",
-                        marginLeft: '180px',
+                        width: "100%",
+                        marginLeft: '220px',
+                        marginRight: "auto",
                         mt: 2,
                         padding: 2,
                         boxShadow: "5px 5px 10px #ccc",
@@ -80,24 +83,27 @@ export const About = () => {
                         <CardHeader
                             avatar={
                                 <Avatar sx={{ bgcolor: 'red' }} aria-label="recipe">
-                                    {item.userName ? item.userName.charAt(0) : ""}
+                                    {about.userName ? about.userName.charAt(0) : ""}
                                 </Avatar>
                             }
-                            title={item.title}
+                            title={about.title}
                             subheader={dateTransformed}
                         />
-                        <CardMedia
-                            component="img"
-                            height="194"
-                            image={item.image}
-                            alt={item.title}
-                        />
-                        <br />
-                        <br />
                         <CardContent>
-                            <Typography variant="body2" color="text.secondary">
-                                {item.description}
-                            </Typography>
+                            <motion.div
+                                whileInView={{ opacity: 1 }}
+                                whileHover={{ scale: 1.1 }}
+                                transition={{ duration: 0.5, type: "tween" }}
+                                className="app__profile-item"
+                            >
+                                <img src={about.imgUrl} alt={about.title} />
+                                <h2 className="bold-text" style={{ marginTop: 20 }}>
+                                    {about.title}
+                                </h2>
+                                <p className="p-text" style={{ marginTop: 10 }}>
+                                    {about.description}
+                                </p>
+                            </motion.div>
                         </CardContent>
                     </Card>
                 </Box>

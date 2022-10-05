@@ -13,23 +13,30 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { motion } from 'framer-motion'
+import "./Testimonials.scss";
 
 const dataBlog = [
     {
-        id: 1,
-        title: "title",
-        description: "desc",
-        image: "https://d30903flf7mc19.cloudfront.net/wp-content/uploads/2018/12/05144836/Headhunter.jpg",
-        userName: "Dave",
-        date: "2022",
+        _id: 12345,
+        imgUrl: "https://static1.personality-database.com/profile_images/6b2cea7df9d043c79f65a371f64cb61a.png",
+        name: "Loading",
+        company: "Retrieving Data",
+        feedback: "hi",
     },
     {
-        id: 1,
-        title: "title",
-        description: "desc",
-        image: "https://i.ytimg.com/vi/oa52MsJJ0AY/maxresdefault.jpg",
-        userName: "Dave",
-        date: "2022",
+        _id: 12345,
+        imgUrl: "https://static1.personality-database.com/profile_images/6b2cea7df9d043c79f65a371f64cb61a.png",
+        name: "Loading",
+        company: "Retrieving Data",
+        feedback: "ola",
+    },
+    {
+        _id: 12345,
+        imgUrl: "https://static1.personality-database.com/profile_images/6b2cea7df9d043c79f65a371f64cb61a.png",
+        name: "Loading",
+        company: "Retrieving Data",
+        feedback: "amigo",
     },
 ]
 
@@ -51,13 +58,14 @@ export const About = () => {
         return data; */
     }
     return (
-        <div>
+        <div className='wrapper'>
             {""}
-            {dataBlog.map((item, index) => (
-                <Box key={index} marginTop={10}>
+            {dataBlog.map((testimonial, index) => (
+                <Box key={index} marginTop={10} marginRight={3}>
                     <Card sx={{
-                        width: "auto",
-                        marginLeft: '180px',
+                        width: "100%",
+                        marginLeft: '220px',
+                        marginRight: "auto",
                         mt: 2,
                         padding: 2,
                         boxShadow: "5px 5px 10px #ccc",
@@ -80,24 +88,33 @@ export const About = () => {
                         <CardHeader
                             avatar={
                                 <Avatar sx={{ bgcolor: 'red' }} aria-label="recipe">
-                                    {item.userName ? item.userName.charAt(0) : ""}
+                                    {testimonial.userName ? testimonial.userName.charAt(0) : ""}
                                 </Avatar>
                             }
-                            title={item.title}
+                            title={testimonial.title}
                             subheader={dateTransformed}
                         />
-                        <CardMedia
-                            component="img"
-                            height="194"
-                            image={item.image}
-                            alt={item.title}
-                        />
-                        <br />
-                        <br />
                         <CardContent>
-                            <Typography variant="body2" color="text.secondary">
-                                {item.description}
-                            </Typography>
+                            <div className="app__testimonial-item app__flex">
+                                <img
+                                    src={testimonial.imgUrl}
+                                    alt={testimonial.name}
+                                />
+                                {console.log(testimonial.imgUrl)}
+                                <div className="app__testimonial-content">
+                                    <p className="p-text">
+                                        {testimonial.feedback}
+                                    </p>
+                                    <div>
+                                        <h4 className="bold-text">
+                                            {testimonial.name}
+                                        </h4>
+                                        <h5 className="p-text">
+                                            {testimonial.company}
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
                         </CardContent>
                     </Card>
                 </Box>

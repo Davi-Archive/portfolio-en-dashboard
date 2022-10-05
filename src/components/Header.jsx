@@ -37,7 +37,6 @@ const Header = () => {
           <Tabs
             textColor="inherit"
             value={value} onChange={(e, val) => setValue(val)}>
-            <Tab LinkComponent={Link} to="/" label="View" />
             <Tab LinkComponent={Link} to="/" label="Add new" />
           </Tabs>
         </Box>}
