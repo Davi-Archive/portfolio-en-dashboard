@@ -16,6 +16,8 @@ import axios from 'axios'
 import { motion } from 'framer-motion'
 import "./Experiences.scss";
 import ReactTooltip from "react-tooltip";
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const dataBlog = [
     {
@@ -39,7 +41,19 @@ const dataBlog = [
 ]
 
 export const About = () => {
-    const dateTransformed = new Date().toLocaleString('pt-BR')
+    const [data, setData] = useState([])
+    const requestData = async () => {
+        const res = await axios.get(`${import.meta.env.VITE_SERVER_URI}portfolio/en/experiences`)
+            .catch(err => console.log(err))
+
+        const data = await res.data
+        setData(data)
+        return data;
+    }
+
+    useEffect(() => {
+        requestData()
+    }, [])
     const navigate = useNavigate();
     const handleEdit = () => {
         navigate(`/myBlogs/${id}`)
@@ -58,7 +72,7 @@ export const About = () => {
     return (
         <div className='wrapper'>
             {""}
-            {dataBlog.map((experience, index) => (
+            {data.map((experience, index) => (
                 <Box key={index} marginTop={10} marginRight={3}>
                     <Card sx={{
                         width: "100%",
@@ -90,7 +104,7 @@ export const About = () => {
                                 </Avatar>
                             }
                             title={experience.title}
-                            subheader={dateTransformed}
+                            subheader={new Date(experience.updatedAt).toLocaleString('pt-BR')}
                         />
                         <CardContent>
                             <motion.div className="app__skills-exp-item" key={experience._id}>

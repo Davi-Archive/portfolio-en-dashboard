@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Card,
     CardHeader,
@@ -12,9 +12,9 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
 import { motion } from 'framer-motion'
 import "./About.scss";
+import axios from 'axios'
 
 const dataBlog = [
     {
@@ -52,7 +52,20 @@ const dataBlog = [
 ]
 
 export const About = () => {
-    const dateTransformed = new Date().toLocaleString('pt-BR')
+    const [data, setData] = useState([])
+    const requestData = async () => {
+        const res = await axios.get(`${import.meta.env.VITE_SERVER_URI}portfolio/en/about`)
+            .catch(err => console.log(err))
+
+        const data = await res.data
+        setData(data)
+        return data;
+    }
+
+    useEffect(() => {
+        requestData()
+    }, [])
+
     const navigate = useNavigate();
     const handleEdit = () => {
         navigate(`/myBlogs/${id}`)
@@ -71,7 +84,7 @@ export const About = () => {
     return (
         <div className='wrapper'>
             {""}
-            {dataBlog.map((about, index) => (
+            {data.map((about, index) => (
                 <Box key={index} marginTop={10} marginRight={3}>
                     <Card sx={{
                         width: "100%",
@@ -103,7 +116,7 @@ export const About = () => {
                                 </Avatar>
                             }
                             title={about.title}
-                            subheader={dateTransformed}
+                            subheader={new Date(about.updatedAt).toLocaleString('pt-BR')}
                         />
                         <CardContent>
                             <motion.div

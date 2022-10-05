@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Card,
     CardHeader,
@@ -12,6 +12,7 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import axios from 'axios'
 import { motion } from 'framer-motion'
 import "./Form.scss";
@@ -36,8 +37,21 @@ const dataBlog = [
 ]
 
 export const About = () => {
-    const dateTransformed = new Date().toLocaleString('pt-BR')
+    const [data, setData] = useState([])
     const navigate = useNavigate();
+    const requestData = async () => {
+        const res = await axios.get(`${import.meta.env.VITE_SERVER_URI}portfolio/en/skills`)
+            .catch(err => console.log(err))
+
+        const data = await res.data
+        setData(data)
+        return data;
+    }
+
+    useEffect(() => {
+        requestData()
+    }, [])
+
     const handleEdit = () => {
         navigate(`/myBlogs/${id}`)
     }
@@ -87,7 +101,7 @@ export const About = () => {
                                 </Avatar>
                             }
                             title={about.title}
-                            subheader={dateTransformed}
+                            subheader={new Date(about.updatedAt).toLocaleString('pt-BR')}
                         />
                         <CardContent>
                             <motion.div

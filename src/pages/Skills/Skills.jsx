@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState,useEffect} from 'react';
 import {
     Card,
     CardHeader,
@@ -52,7 +52,20 @@ const dataBlog = [
 ]
 
 export const About = () => {
-    const dateTransformed = new Date().toLocaleString('pt-BR')
+    const [data, setData] = useState([])
+    const requestData = async () => {
+        const res = await axios.get(`${import.meta.env.VITE_SERVER_URI}portfolio/en/skills`)
+            .catch(err => console.log(err))
+
+        const data = await res.data
+        setData(data)
+        return data;
+    }
+
+    useEffect(() => {
+        requestData()
+    }, [])
+
     const navigate = useNavigate();
     const handleEdit = () => {
         navigate(`/myBlogs/${id}`)
@@ -71,7 +84,7 @@ export const About = () => {
     return (
         <div className='wrapper'>
             {""}
-            {dataBlog.map((skill, index) => (
+            {data.map((skill, index) => (
                 <Box key={index} marginTop={10} marginRight={3}>
                     <Card sx={{
                         width: "100%",
@@ -103,7 +116,7 @@ export const About = () => {
                                 </Avatar>
                             }
                             title={skill.title}
-                            subheader={dateTransformed}
+                            subheader={new Date(skill.updatedAt).toLocaleDateString('pt-BR')}
                         />
                         <CardContent>
                             <motion.div
