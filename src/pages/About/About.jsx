@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios'
 import {
     Card,
     CardHeader,
-    CardMedia,
     Avatar,
     CardContent,
-    Typography,
     IconButton,
     Box
 } from '@mui/material';
@@ -14,56 +13,14 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion'
 import "./About.scss";
-import axios from 'axios'
-
-const dataBlog = [
-    {
-        id: 1,
-        title: "title",
-        description: "desc",
-        imgUrl: "https://d30903flf7mc19.cloudfront.net/wp-content/uploads/2018/12/05144836/Headhunter.jpg",
-        userName: "Dave",
-        date: "2022",
-    },
-    {
-        id: 1,
-        title: "title",
-        description: "desc",
-        imgUrl: "https://i.ytimg.com/vi/oa52MsJJ0AY/maxresdefault.jpg",
-        userName: "Dave",
-        date: "2022",
-    },
-    {
-        id: 1,
-        title: "title",
-        description: "desc",
-        imgUrl: "https://i.ytimg.com/vi/oa52MsJJ0AY/maxresdefault.jpg",
-        userName: "Dave",
-        date: "2022",
-    },
-    {
-        id: 1,
-        title: "title",
-        description: "desc",
-        imgUrl: "https://i.ytimg.com/vi/oa52MsJJ0AY/maxresdefault.jpg",
-        userName: "Dave",
-        date: "2022",
-    },
-]
+import { requestData } from '../../container/dataService'
 
 export const About = () => {
     const [data, setData] = useState([])
-    const requestData = async () => {
-        const res = await axios.get(`${import.meta.env.VITE_SERVER_URI}portfolio/en/about`)
-            .catch(err => console.log(err))
-
-        const data = await res.data
-        setData(data)
-        return data;
-    }
-
     useEffect(() => {
-        requestData()
+        requestData('portfolio/en/about')
+            .then(data => setData(data))
+            .catch(err => console.log(err))
     }, [])
 
     const navigate = useNavigate();

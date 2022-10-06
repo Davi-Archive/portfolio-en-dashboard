@@ -13,43 +13,18 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import axios from 'axios'
 import { motion } from 'framer-motion'
+import { requestData, fallback } from '../../container/dataService';
+/* import fallback from '../../container/fallbackObj'; */
 import "./Form.scss";
-
-const dataBlog = [
-    {
-        id: 1,
-        title: "title",
-        description: "desc",
-        image: "https://d30903flf7mc19.cloudfront.net/wp-content/uploads/2018/12/05144836/Headhunter.jpg",
-        userName: "Dave",
-        date: "2022",
-    },
-    {
-        id: 1,
-        title: "title",
-        description: "desc",
-        image: "https://i.ytimg.com/vi/oa52MsJJ0AY/maxresdefault.jpg",
-        userName: "Dave",
-        date: "2022",
-    },
-]
 
 export const About = () => {
     const [data, setData] = useState([])
     const navigate = useNavigate();
-    const requestData = async () => {
-        const res = await axios.get(`${import.meta.env.VITE_SERVER_URI}portfolio/en/skills`)
-            .catch(err => console.log(err))
-
-        const data = await res.data
-        setData(data)
-        return data;
-    }
-
     useEffect(() => {
-        requestData()
+        requestData('portfolio/en/skills')
+            .then(data => setData(data))
+            .catch(err => console.log(err))
     }, [])
 
     const handleEdit = () => {
@@ -69,7 +44,7 @@ export const About = () => {
     return (
         <div className='wrapper'>
             {""}
-            {dataBlog.map((about, index) => (
+            {fallback.map((about, index) => (
                 <Box key={index} marginTop={10} marginRight={3}>
                     <Card sx={{
                         width: "100%",

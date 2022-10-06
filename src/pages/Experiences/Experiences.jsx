@@ -2,57 +2,27 @@ import React from 'react';
 import {
     Card,
     CardHeader,
-    CardMedia,
     Avatar,
     CardContent,
-    Typography,
     IconButton,
     Box
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
 import { motion } from 'framer-motion'
 import "./Experiences.scss";
 import ReactTooltip from "react-tooltip";
 import { useState } from 'react';
 import { useEffect } from 'react';
-
-const dataBlog = [
-    {
-        _id: 15646542344,
-        year: "2022",
-        name: "Loading",
-        bgColor: "fff000",
-        icon: "https://i.ytimg.com/vi/oa52MsJJ0AY/maxresdefault.jpg",
-        desc: "Trying to retrieve data",
-        company: "Trying to retrieve data",
-    },
-    {
-        _id: 127745683234,
-        year: "2022",
-        name: "Loading.",
-        bgColor: "fff000",
-        desc: "Trying to retrieve data",
-        company: "Trying to retrieve data",
-        icon: "https://d30903flf7mc19.cloudfront.net/wp-content/uploads/2018/12/05144836/Headhunter.jpg"
-    },
-]
+import { requestData } from '../../container/dataService';
 
 export const About = () => {
     const [data, setData] = useState([])
-    const requestData = async () => {
-        const res = await axios.get(`${import.meta.env.VITE_SERVER_URI}portfolio/en/experiences`)
-            .catch(err => console.log(err))
-
-        const data = await res.data
-        setData(data)
-        return data;
-    }
-
     useEffect(() => {
-        requestData()
+        requestData('portfolio/en/experiences')
+            .then(data => setData(data))
+            .catch(err => console.log(err))
     }, [])
     const navigate = useNavigate();
     const handleEdit = () => {

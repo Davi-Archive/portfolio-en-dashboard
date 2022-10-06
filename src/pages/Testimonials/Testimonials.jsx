@@ -1,19 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     Card,
     CardHeader,
-    CardMedia,
     Avatar,
     CardContent,
-    Typography,
     IconButton,
     Box
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
-import { motion } from 'framer-motion'
+import { requestData } from '../../container/dataService';
 import "./Testimonials.scss";
 
 const dataBlog = [
@@ -41,8 +38,14 @@ const dataBlog = [
 ]
 
 export const About = () => {
+
     const dateTransformed = new Date().toLocaleString('pt-BR')
     const navigate = useNavigate();
+    useEffect(() => {
+        requestData('portfolio/en/testimonials')
+            .then(data => setData(data))
+            .catch(err => console.log(err))
+    }, [])
     const handleEdit = () => {
         navigate(`/myBlogs/${id}`)
     }

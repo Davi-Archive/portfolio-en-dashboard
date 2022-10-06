@@ -13,8 +13,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { AiFillEye, AiFillGithub } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
 import { motion } from 'framer-motion'
+import { requestData } from '../../container/dataService';
 import "./Work.scss";
 
 const dataBlog = [
@@ -52,17 +52,10 @@ const dataBlog = [
 
 export const About = () => {
     const [data, setData] = useState([])
-    const requestData = async () => {
-        const res = await axios.get(`${import.meta.env.VITE_SERVER_URI}portfolio/en/work`)
-            .catch(err => console.log(err))
-
-        const data = await res.data
-        setData(data)
-        return data;
-    }
-
     useEffect(() => {
-        requestData()
+        requestData('portfolio/en/work')
+            .then(data => setData(data))
+            .catch(err => console.log(err))
     }, [])
 
     const navigate = useNavigate();
