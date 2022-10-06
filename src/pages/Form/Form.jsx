@@ -14,24 +14,25 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion'
-import { requestData, fallback } from '../../container/dataService';
-/* import fallback from '../../container/fallbackObj'; */
+import { requestDataToken, fallback } from '../../container/dataService';
 import "./Form.scss";
 
-export const About = () => {
-    const [data, setData] = useState([])
+export const Form = () => {
+    const [data, setData] = useState(fallback)
     const navigate = useNavigate();
+    const token = useSelector(state => state.auth.user.token)
     useEffect(() => {
-        requestData('portfolio/en/skills')
+        requestDataToken('portfolio/contact', token)
             .then(data => setData(data))
             .catch(err => console.log(err))
     }, [])
-
+    console.log(data)
     const handleEdit = () => {
         navigate(`/myBlogs/${id}`)
     }
-    const handleDelete = () => {
-        /* deleteRequest().then(data => console.log(data))
+    const handleDelete = (id) => {
+        console.log(id)
+        /* deleteRequest(id).then(data => console.log(data))
             .then(() => navigate("/myBlogs"))
             .then(() => navigate("/blogs")) */
     }
@@ -44,7 +45,8 @@ export const About = () => {
     return (
         <div className='wrapper'>
             {""}
-            {fallback.map((about, index) => (
+            {data.map((form, index) => (
+                <>
                 <Box key={index} marginTop={10} marginRight={3}>
                     <Card sx={{
                         width: "100%",
@@ -65,41 +67,47 @@ export const About = () => {
                                 <EditIcon color="warning" />
                             </IconButton>
                             <IconButton
-                                onClick={handleDelete}
+                                onClick={()=>{handleDelete(form._id)}}
                             ><DeleteForeverIcon color="error" />
                             </IconButton>
                         </Box>
                         <CardHeader
                             avatar={
                                 <Avatar sx={{ bgcolor: 'red' }} aria-label="recipe">
-                                    {about.userName ? about.userName.charAt(0) : ""}
+                                    {form.userName ? form.userName.charAt(0) : ""}
                                 </Avatar>
                             }
-                            title={about.title}
-                            subheader={new Date(about.updatedAt).toLocaleString('pt-BR')}
+                            title={form.email}
+                            subheader={new Date(form.updatedAt).toLocaleString('pt-BR')}
                         />
                         <CardContent>
-                            <motion.div
+                            <div
                                 whileInView={{ opacity: 1 }}
                                 whileHover={{ scale: 1.1 }}
                                 transition={{ duration: 0.5, type: "tween" }}
                                 className="app__profile-item"
                             >
-                                <img src={about.imgUrl} alt={about.title} />
                                 <h2 className="bold-text" style={{ marginTop: 20 }}>
-                                    {about.title}
+                                    {form.name}
                                 </h2>
                                 <p className="p-text" style={{ marginTop: 10 }}>
-                                    {about.description}
+                                    {form.message}
                                 </p>
-                            </motion.div>
+                                <hr />
+                                <br />
+                                <p className="p-text" style={{ marginTop: 10 }}>
+                                    From:{form.where}
+                                </p>
+
+                            </div>
                         </CardContent>
                     </Card>
-                </Box>
+                </Box >
+                </>
             ))
             }
-        </div>
+        </div >
     );
 }
 
-export default About
+export default Form

@@ -57,3 +57,49 @@ export const fallback = [
     userName: "Username 3",
   },
 ];
+
+export const initialState = {
+  title: false,
+  description: false,
+  imgUrl: false,
+  name: false,
+  bgColor: false,
+  icon: false,
+  projectLink: false,
+  codeLink: false,
+  tags: false,
+  company: false,
+  feedback: false,
+  year: false,
+  desc: false,
+  email: false,
+  message: false,
+  ButtonSelected: "About",
+};
+export const aboutState = {
+  ...initialState,
+  title: true,
+  description: true,
+  imgUrl: true,
+  ButtonSelected: "About",
+  path: "portfolio/en/about",
+};
+
+export const initialStateValue = {
+  title: "",
+  description: "",
+  imgUrl: "",
+  name: "",
+  bgColor: "",
+  icon: "",
+  projectLink: "",
+  codeLink: "",
+  tags: "",
+  company: "",
+  feedback: "",
+  year: "",
+  desc: "",
+  email: "",
+  message: "",
+  path: "portfolio/en/about",
+};

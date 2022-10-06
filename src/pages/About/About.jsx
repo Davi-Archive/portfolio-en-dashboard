@@ -12,31 +12,31 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion'
+import { deleteDataToken, requestData } from '../../container/dataService'
+import { useSelector } from 'react-redux';
 import "./About.scss";
-import { requestData } from '../../container/dataService'
+
+const PATH = 'portfolio/en/about/';
 
 export const About = () => {
+    const navigate = useNavigate();
     const [data, setData] = useState([])
+    const token = useSelector(state => state.auth.user.token)
+
     useEffect(() => {
-        requestData('portfolio/en/about')
+        requestData(PATH)
             .then(data => setData(data))
             .catch(err => console.log(err))
     }, [])
 
-    const navigate = useNavigate();
-    const handleEdit = () => {
-        navigate(`/myBlogs/${id}`)
+    const handleEdit = (id) => {
+        console.log(id)
+       /*  navigate(`/edit/${id}`) */
     }
-    const handleDelete = () => {
-        /* deleteRequest().then(data => console.log(data))
-            .then(() => navigate("/myBlogs"))
-            .then(() => navigate("/blogs")) */
-    }
-    const deleteRequest = async () => {
-        /* const res = await axios.delete(`${import.meta.env.VITE_API_URL}/api/blog/${id}`)
-            .catch(err => console.log(err))
-        const data = await res.data;
-        return data; */
+    const handleDelete = async (id) => {
+        deleteDataToken(PATH, token, id)
+            .then(data => console.log(data))
+            .then(() => navigate("/"))
     }
     return (
         <div className='wrapper'>
@@ -57,12 +57,12 @@ export const About = () => {
                         <Box display="flex">
                             <IconButton
                                 sx={{ marginLeft: "auto" }}
-                                onClick={handleEdit}
+                                onClick={() => handleEdit(about._id)}
                             >
                                 <EditIcon color="warning" />
                             </IconButton>
                             <IconButton
-                                onClick={handleDelete}
+                                onClick={() => handleDelete(about._id)}
                             ><DeleteForeverIcon color="error" />
                             </IconButton>
                         </Box>

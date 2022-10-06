@@ -2,58 +2,21 @@ import { Box, Button, Typography } from '@mui/material'
 import './Dashboard.scss'
 import SendIcon from '@mui/icons-material/Send';
 import { useState } from 'react';
+import { initialStateValue, initialState, aboutState } from '../../container/fallbackObj';
+import { createDataToken } from '../../container/dataService'
+import { useSelector } from 'react-redux'
 
 const Dashboard = () => {
-  const initialState = {
-    title: false,
-    description: false,
-    imgUrl: false,
-    name: false,
-    bgColor: false,
-    icon: false,
-    projectLink: false,
-    codeLink: false,
-    tags: false,
-    company: false,
-    feedback: false,
-    year: false,
-    desc: false,
-    email: false,
-    message: false,
-    ButtonSelected: 'About'
-  }
-  const aboutState = {
-    ...initialState,
-    title: true,
-    description: true,
-    imgUrl: true,
-    ButtonSelected: 'About'
-  }
-
-  const initialStateValue = {
-    title: "",
-    description: "",
-    imgUrl: "",
-    name: "",
-    bgColor: "",
-    icon: "",
-    projectLink: "",
-    codeLink: "",
-    tags: "",
-    company: "",
-    feedback: "",
-    year: "",
-    desc: "",
-    email: "",
-    message: "",
-  }
-
-
   const [form, setForm] = useState(aboutState)
   const [value, setValue] = useState(initialStateValue)
+  const token = useSelector(state => state.auth.user.token)
   const handleSubmit = (e) => {
+    createDataToken(value.path, token, value)
+      .then(data => setForm((prevState) => ({
+        ...prevState,
+        ButtonSelected: data.msg,
+      })))
     e.preventDefault()
-    console.log(value)
   }
   const handleChange = (e) => {
     setValue((prevState) => ({
@@ -61,6 +24,7 @@ const Dashboard = () => {
       [e.target.name]: e.target.value
     }))
   }
+
   return (
     <Box marginTop={10} marginLeft="210px">
       <div className="form-style-6">
@@ -73,7 +37,8 @@ const Dashboard = () => {
                   title: true,
                   description: true,
                   imgUrl: true,
-                  ButtonSelected: 'About'
+                  ButtonSelected: 'About',
+                  path: 'portfolio/en/about'
                 })
                 setValue(initialStateValue)
               }}
@@ -95,7 +60,8 @@ const Dashboard = () => {
                   name: true,
                   tags: true,
                   imgUrl: true,
-                  ButtonSelected: 'Work'
+                  ButtonSelected: 'Work',
+                  path: 'portfolio/en/work'
                 })
                 setValue(initialStateValue)
               }}
@@ -113,7 +79,8 @@ const Dashboard = () => {
                   name: true,
                   bgColor: true,
                   icon: true,
-                  ButtonSelected: 'Skills'
+                  ButtonSelected: 'Skills',
+                  path: 'portfolio/en/skills'
                 })
                 setValue(initialStateValue)
               }}
@@ -132,7 +99,8 @@ const Dashboard = () => {
                   company: true,
                   feedback: true,
                   imgUrl: true,
-                  ButtonSelected: 'Testimonials'
+                  ButtonSelected: 'Testimonials',
+                  path: 'portfolio/en/testimonials'
                 })
                 setValue(initialStateValue)
               }}
@@ -152,7 +120,8 @@ const Dashboard = () => {
                   year: true,
                   icon: true,
                   bgColor: true,
-                  ButtonSelected: 'Experiences'
+                  ButtonSelected: 'Experiences',
+                  path: 'portfolio/en/experiences'
                 })
                 setValue(initialStateValue)
               }}

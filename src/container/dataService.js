@@ -3,8 +3,7 @@ import { fallback } from "./fallbackObj"; // Object to fallback if somenthing fa
 
 const API_URL = import.meta.env.VITE_SERVER_URI;
 
-//Get Data
-// portfolio/en/about
+// Get Data without Token
 const requestData = async (path) => {
   const res = await axios
     .get(`${API_URL}${path}`)
@@ -13,6 +12,42 @@ const requestData = async (path) => {
   const data = await res.data;
   return data;
 };
+
+// getData with Token
+const requestDataToken = async (path, token, data) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await axios.get(`${API_URL}${path}`, config);
+  return response.data;
+};
+
+//Create new data With TOKEN
+const createDataToken = async (path, token, data) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.post(`${API_URL}${path}`, data, config);
+  return response.data;
+};
+
+const deleteDataToken = async (path, token, id) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  const response = await axios.delete(`${API_URL}${path}` + id, config);
+
+  return response.data;
+};
+
+/*
 
 // Create new goal
 const createGoal = async (goalData, token) => {
@@ -51,6 +86,6 @@ const deleteGoal = async (goalId, token) => {
   const response = await axios.delete(API_URL + goalId, config);
 
   return response.data;
-};
+}; */
 
-export { createGoal, getGoals, deleteGoal, requestData, fallback };
+export { requestData, requestDataToken, createDataToken, deleteDataToken, fallback };
