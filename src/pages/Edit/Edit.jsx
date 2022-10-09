@@ -1,55 +1,130 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import './Edit.scss'
 import axios from 'axios'
-import { Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
+import SendIcon from '@mui/icons-material/Send';
+import { initialStateValue, initialState, aboutState } from '../../container/fallbackObj';
 
 const Edit = () => {
+  const [form, setForm] = useState(aboutState)
+  const [value, setValue] = useState(initialStateValue)
   const { path, id } = useParams()
   const token = useSelector(state => state.auth.user.token)
-  let absolutePath;
-  switch (path) {
-    case 'about':
-      absolutePath = 'portfolio/en/about'
-      break;
-    case 'work':
-      absolutePath = 'portfolio/en/work'
-      break;
-    case 'skills':
-      absolutePath = 'portfolio/en/skills'
-      break;
-    case 'testimonials':
-      absolutePath = 'portfolio/en/testimonials'
-      break;
-    case 'experiences':
-      absolutePath = 'portfolio/en/experiences'
-      break;
-    case 'form':
-      absolutePath = 'portfolio/contact'
-      break;
-    default:
-      absolutePath = 'Server URL not found'
-      break;
+  const handleSubmit = async (e) => {
+    axios.put(`${import.meta.env.VITE_SERVER_URI}${value.path}/${id}`)
+    console.log(value)
+    e.preventDefault()
   }
+  const handleChange = (e) => {
+    setValue((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  const requestEdit = async () =>{
+
+  }
+
+  useEffect(() => {
+    findDataById().then(data => setValue(data))
+
+    //set visible camps by URL parameters
+    if (path === 'about') {
+      setForm({
+        ...initialState,
+        title: true,
+        description: true,
+        imgUrl: true,
+        ButtonSelected: 'About',
+        path: 'portfolio/en/about'
+      })
+    }
+    if (path === 'skills') {
+      setForm({
+        ...initialState,
+        name: true,
+        bgColor: true,
+        icon: true,
+        ButtonSelected: 'Skills',
+        path: 'portfolio/en/skills'
+      })
+    }
+    if (path === 'work') {
+      setForm({
+        ...initialState,
+        title: true,
+        projectLink: true,
+        codeLink: true,
+        description: true,
+        name: true,
+        tags: true,
+        imgUrl: true,
+        ButtonSelected: 'Work',
+        path: 'portfolio/en/work'
+      })
+    }
+    if (path === 'testimonials') {
+      setForm({
+        ...initialState,
+        name: true,
+        company: true,
+        feedback: true,
+        imgUrl: true,
+        ButtonSelected: 'Testimonials',
+        path: 'portfolio/en/testimonials'
+      })
+    }
+    if (path === 'experiences') {
+      setForm({
+        ...initialState,
+        name: true,
+        company: true,
+        year: true,
+        icon: true,
+        bgColor: true,
+        ButtonSelected: 'Experiences',
+        path: 'portfolio/en/experiences'
+      })
+    }
+
+  }, [])
   const findDataById = async () => {
-    const res = await axios.get(`${import.meta.env.VITE_SERVER_URI}${absolutePath}/${id}`)
+    const res = await axios.get(`${import.meta.env.VITE_SERVER_URI}${value.path}/${id}`)
     const data = await res.data
-    console.log(data)
-    console.log(`${import.meta.env.VITE_SERVER_URI}${absolutePath}/${id}`)
+    return data;
   }
 
   return (
-    <>
-      <div>Edit</div>
-      <div>token</div>
-      <div className='edit-wrapper'><h1>AMIGO</h1></div>
-      <div className='edit-wrapper'><h1>AMIGO</h1></div>
-      <div className='edit-wrapper'><h1>AMIGO</h1></div>
-      <div className='edit-wrapper'><h1>{id}</h1></div>
-      <div className='edit-wrapper'><h1>{path}</h1></div>
-      <div className='edit-wrapper'><Button onClick={findDataById}>Click</Button></div>
-    </>
+    <Box marginTop={10} marginLeft="210px">
+      <div className="form-style-6">
+        <Box alignItems="center" justifyContent="center" display="flex">
+          <Typography variant="h2">{form.ButtonSelected}</Typography>
+        </Box>
+        <form onSubmit={handleSubmit}>
+          {form.name && <input onChange={handleChange} type="text" name="name" value={value.name} placeholder="Your Name" />}
+          {form.email && <input onChange={handleChange} value={value.email} type="email" name="email" placeholder="Email Address" />}
+          {form.title && <input onChange={handleChange} value={value.title} type="text" name="title" placeholder="Your Title" />}
+          {form.description && <textarea onChange={handleChange} value={value.description} name="description" placeholder="Description" />}
+          {form.imgUrl && <input onChange={handleChange} value={value.imgUrl} type="text" name="imgUrl" placeholder="Your image Link" />}
+          {form.bgColor && <input onChange={handleChange} value={value.bgColor} type="text" name="bgColor" placeholder="Your HTML color tag eg(#fffff)" />}
+          {form.icon && <input onChange={handleChange} value={value.icon} type="text" name="icon" placeholder="Your icon Link" />}
+          {form.projectLink && <input onChange={handleChange} value={value.projectLink} type="text" name="projectLink" placeholder="Your Project Link" />}
+          {form.codeLink && <input onChange={handleChange} value={value.codeLink} type="text" name="codeLink" placeholder="Your Code Link" />}
+          {form.tags && <input onChange={handleChange} value={value.tags} type="text" name="tags" placeholder="Your Tags" />}
+          {form.company && <input onChange={handleChange} value={value.company} type="text" name="company" placeholder="Your Company" />}
+          {form.feedback && <textarea onChange={handleChange} value={value.feedback} name="feedback" placeholder="Your Feedback" />}
+          {form.year && <input onChange={handleChange} value={value.year} type="text" name="year" placeholder="Year" />}
+          {form.message && <input onChange={handleChange} value={value.message} type="text" name="year" placeholder="Message" />}
+          {form.desc && <textarea onChange={handleChange} value={value.desc} name="desc" placeholder="Description" />}
+          <Button sx={{ width: '100%' }} type="submit" variant="contained" size="large">
+            SUBMIT
+          </Button>
+        </form>
+      </div>
+    </Box>
   )
 }
 

@@ -30,7 +30,7 @@ export const About = () => {
     }, [])
 
     const handleEdit = (id) => {
-        navigate(`../edit/${id}/about`)
+        navigate(`../edit/about/${id}`)
         console.log(id)
         console.log(PATH)
         /*  navigate(`/edit/${id}`) */
