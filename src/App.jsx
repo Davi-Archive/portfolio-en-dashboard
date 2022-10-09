@@ -13,6 +13,7 @@ import Form from './pages/Form/Form';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector,useDispatch } from 'react-redux'
 import { logoutRender } from './features/auth/authSlice'
+import Edit from './pages/Edit/Edit';
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
                   <Route path="/testimonials" element={<Testimonials />} />
                   <Route path="/experiences" element={<Experiences />} />
                   <Route path="/form" element={<Form />} />
+                  <Route path="/edit/:id/:path" element={<Edit />} />
                 </Routes>
               </main>
             </>

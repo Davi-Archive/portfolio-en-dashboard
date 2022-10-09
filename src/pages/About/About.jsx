@@ -30,8 +30,10 @@ export const About = () => {
     }, [])
 
     const handleEdit = (id) => {
+        navigate(`../edit/${id}/about`)
         console.log(id)
-       /*  navigate(`/edit/${id}`) */
+        console.log(PATH)
+        /*  navigate(`/edit/${id}`) */
     }
     const handleDelete = async (id) => {
         deleteDataToken(PATH, token, id)
