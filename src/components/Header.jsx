@@ -13,7 +13,7 @@ import {
   Divider,
 } from '@mui/material'
 import { Link } from 'react-router-dom'
-import { mainListItems, secondaryListItems } from '../components/listItems';
+import { mainListItems, secondaryListItems } from '../components/ListItems';
 import { logoutRender, reset } from '../features/auth/authSlice'
 
 const Header = () => {
