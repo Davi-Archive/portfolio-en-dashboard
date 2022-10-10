@@ -11,7 +11,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion'
-import "./skills.scss";
+import "./Skills.scss";
 import { requestData, deleteDataToken, fallback } from '../../container/dataService';
 import { useSelector } from 'react-redux';
 
