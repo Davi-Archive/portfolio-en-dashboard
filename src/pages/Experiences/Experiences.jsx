@@ -17,6 +17,8 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { requestData } from '../../container/dataService';
 
+const PATH = 'portfolio/en/experiences/';
+
 export const About = () => {
     const [data, setData] = useState([])
     useEffect(() => {
@@ -25,19 +27,14 @@ export const About = () => {
             .catch(err => console.log(err))
     }, [])
     const navigate = useNavigate();
-    const handleEdit = () => {
-        navigate(`/myBlogs/${id}`)
+    const handleEdit = (id) => {
+        // pass id and path to <Edit /> component as in APP.jsx
+        navigate(`../edit/experiences/${id}`)
     }
-    const handleDelete = () => {
-        /* deleteRequest().then(data => console.log(data))
-            .then(() => navigate("/myBlogs"))
-            .then(() => navigate("/blogs")) */
-    }
-    const deleteRequest = async () => {
-        /* const res = await axios.delete(`${import.meta.env.VITE_API_URL}/api/blog/${id}`)
-            .catch(err => console.log(err))
-        const data = await res.data;
-        return data; */
+    const handleDelete = (id) => {
+        deleteDataToken(PATH, token, id)
+            .then(data => console.log(data))
+            .then(() => navigate("/"))
     }
     return (
         <div className='wrapper'>
@@ -58,12 +55,12 @@ export const About = () => {
                         <Box display="flex">
                             <IconButton
                                 sx={{ marginLeft: "auto" }}
-                                onClick={handleEdit}
+                                onClick={() => handleEdit(experience._id)}
                             >
                                 <EditIcon color="warning" />
                             </IconButton>
                             <IconButton
-                                onClick={handleDelete}
+                                onClick={() => handleDelete(experience._id)}
                             ><DeleteForeverIcon color="error" />
                             </IconButton>
                         </Box>

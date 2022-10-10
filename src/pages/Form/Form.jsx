@@ -28,19 +28,13 @@ export const Form = () => {
     }, [])
     console.log(data)
     const handleEdit = () => {
-        navigate(`/myBlogs/${id}`)
+        // pass id and path to <Edit /> component as in APP.jsx
+        navigate(`../edit/about/${id}`)
     }
-    const handleDelete = (id) => {
-        console.log(id)
-        /* deleteRequest(id).then(data => console.log(data))
-            .then(() => navigate("/myBlogs"))
-            .then(() => navigate("/blogs")) */
-    }
-    const deleteRequest = async () => {
-        /* const res = await axios.delete(`${import.meta.env.VITE_API_URL}/api/blog/${id}`)
-            .catch(err => console.log(err))
-        const data = await res.data;
-        return data; */
+    const handleDelete = () => {
+        deleteDataToken(PATH, token, id)
+            .then(data => console.log(data))
+            .then(() => navigate("/"))
     }
     return (
         <div className='wrapper'>

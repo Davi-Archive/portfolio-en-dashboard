@@ -30,10 +30,8 @@ export const About = () => {
     }, [])
 
     const handleEdit = (id) => {
+        // pass id and path to <Edit /> component as in APP.jsx
         navigate(`../edit/about/${id}`)
-        console.log(id)
-        console.log(PATH)
-        /*  navigate(`/edit/${id}`) */
     }
     const handleDelete = async (id) => {
         deleteDataToken(PATH, token, id)

@@ -47,18 +47,13 @@ export const About = () => {
             .catch(err => console.log(err))
     }, [])
     const handleEdit = () => {
-        navigate(`/myBlogs/${id}`)
+        // pass id and path to <Edit /> component as in APP.jsx
+        navigate(`../edit/testimonials/${id}`)
     }
     const handleDelete = () => {
-        /* deleteRequest().then(data => console.log(data))
-            .then(() => navigate("/myBlogs"))
-            .then(() => navigate("/blogs")) */
-    }
-    const deleteRequest = async () => {
-        /* const res = await axios.delete(`${import.meta.env.VITE_API_URL}/api/blog/${id}`)
-            .catch(err => console.log(err))
-        const data = await res.data;
-        return data; */
+        deleteDataToken(PATH, token, id)
+            .then(data => console.log(data))
+            .then(() => navigate("/"))
     }
     return (
         <div className='wrapper'>
@@ -79,12 +74,12 @@ export const About = () => {
                         <Box display="flex">
                             <IconButton
                                 sx={{ marginLeft: "auto" }}
-                                onClick={handleEdit}
+                                onClick={() => handleEdit(testimonial._id)}
                             >
                                 <EditIcon color="warning" />
                             </IconButton>
                             <IconButton
-                                onClick={handleDelete}
+                                onClick={() => handleDelete(testimonial._id)}
                             ><DeleteForeverIcon color="error" />
                             </IconButton>
                         </Box>
