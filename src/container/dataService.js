@@ -25,7 +25,7 @@ const requestDataToken = async (path, token, data) => {
   return response.data;
 };
 
-//Create new data With TOKEN
+//Create new data With TOKEN @POST
 const createDataToken = async (path, token, data) => {
   const config = {
     headers: {
@@ -36,6 +36,7 @@ const createDataToken = async (path, token, data) => {
   return response.data;
 };
 
+// Delete one data with Token @DELETE
 const deleteDataToken = async (path, token, id) => {
   const config = {
     headers: {
@@ -47,45 +48,29 @@ const deleteDataToken = async (path, token, id) => {
   return response.data;
 };
 
-/*
-
-// Create new goal
-const createGoal = async (goalData, token) => {
+// Edit one data with token @PUT
+const editDataToken = async (path, token, id, data) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-
-  const response = await axios.post(API_URL, goalData, config);
-
-  return response.data;
+  const res = await axios.put(`${API_URL}${path}/${id}`, data, config);
+  return res.data;
 };
 
-// Get user goals
-const getGoals = async (token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  const response = await axios.get(API_URL, config);
-
-  return response.data;
+// GET one data by it's ID
+const findOneDataById = async (path, id) => {
+  const res = await axios.get(API_URL + path + "/" + id);
+  return res.data;
 };
 
-// Delete user goal
-const deleteGoal = async (goalId, token) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-
-  const response = await axios.delete(API_URL + goalId, config);
-
-  return response.data;
-}; */
-
-export { requestData, requestDataToken, createDataToken, deleteDataToken, fallback };
+export {
+  findOneDataById,
+  editDataToken,
+  requestData,
+  requestDataToken,
+  createDataToken,
+  deleteDataToken,
+  fallback,
+};

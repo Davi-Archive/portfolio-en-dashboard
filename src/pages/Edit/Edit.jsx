@@ -2,21 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import './Edit.scss'
-import axios from 'axios'
 import { Box, Button, Typography } from '@mui/material'
-import SendIcon from '@mui/icons-material/Send';
 import { initialStateValue, initialState, aboutState } from '../../container/fallbackObj';
+import { editDataToken, findOneDataById } from '../../container/dataService'
 
 const Edit = () => {
   const [form, setForm] = useState(aboutState)
   const [value, setValue] = useState(initialStateValue)
   const { path, id } = useParams()
   const token = useSelector(state => state.auth.user.token)
-  const handleSubmit = async (e) => {
-    axios.put(`${import.meta.env.VITE_SERVER_URI}${value.path}/${id}`)
-    console.log(value)
-    e.preventDefault()
-  }
+
   const handleChange = (e) => {
     setValue((prevState) => ({
       ...prevState,
@@ -24,12 +19,8 @@ const Edit = () => {
     }))
   }
 
-  const requestEdit = async () =>{
-
-  }
-
   useEffect(() => {
-    findDataById().then(data => setValue(data))
+    findOneDataById(`${form.path}`, id).then(data => setValue(data))
 
     //set visible camps by URL parameters
     if (path === 'about') {
@@ -91,10 +82,9 @@ const Edit = () => {
     }
 
   }, [])
-  const findDataById = async () => {
-    const res = await axios.get(`${import.meta.env.VITE_SERVER_URI}${value.path}/${id}`)
-    const data = await res.data
-    return data;
+  const handleSubmit = (e) => {
+    editDataToken(`${form.path}`, token, id, value).then(data => console.log(data))
+    e.preventDefault()
   }
 
   return (
