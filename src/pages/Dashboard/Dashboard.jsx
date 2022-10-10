@@ -11,11 +11,13 @@ const Dashboard = () => {
   const [value, setValue] = useState(initialStateValue)
   const token = useSelector(state => state.auth.user.token)
   const handleSubmit = (e) => {
-    createDataToken(value.path, token, value)
-      .then(data => setForm((prevState) => ({
+    createDataToken(form.path, token, value)
+      .then(data => {setForm((prevState) => ({
         ...prevState,
         ButtonSelected: data.msg,
-      })))
+      }))
+      console.log(data)
+    })
     e.preventDefault()
   }
   const handleChange = (e) => {

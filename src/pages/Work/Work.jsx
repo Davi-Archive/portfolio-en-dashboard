@@ -14,56 +14,27 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { AiFillEye, AiFillGithub } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion'
-import { requestData } from '../../container/dataService';
+import { fallback, requestData } from '../../container/dataService';
 import "./Work.scss";
+import { useSelector } from 'react-redux';
 
-const dataBlog = [
-    {
-        _id: 16546769071,
-        title: "Loading",
-        projectLink: "#",
-        codeLink: "#",
-        imgUrl: "https://thicc.mywaifulist.moe/waifus/2284/c2fc255f9cba6692d6ea5cd7678c647ec3e9a9c3d229ffb22d456304d97e67c3_thumb.jpeg",
-        description: "Loading.",
-        name: "Davi",
-        tags: ["1", "3", "4"],
-    },
-    {
-        _id: 16546769071,
-        title: "Loading",
-        projectLink: "#",
-        codeLink: "#",
-        imgUrl: "https://thicc.mywaifulist.moe/waifus/2284/c2fc255f9cba6692d6ea5cd7678c647ec3e9a9c3d229ffb22d456304d97e67c3_thumb.jpeg",
-        description: "Loading.",
-        name: "Davi",
-        tags: ["1", "3", "4"],
-    },
-    {
-        _id: 16546769071,
-        title: "Loading",
-        projectLink: "#",
-        codeLink: "#",
-        imgUrl: "https://thicc.mywaifulist.moe/waifus/2284/c2fc255f9cba6692d6ea5cd7678c647ec3e9a9c3d229ffb22d456304d97e67c3_thumb.jpeg",
-        description: "Loading.",
-        name: "Davi",
-        tags: ["1", "3", "4"],
-    },
-]
+const PATH = 'portfolio/en/work'
 
-export const About = () => {
-    const [data, setData] = useState([])
+export const Work = () => {
+    const [data, setData] = useState(fallback)
+    const token = useSelector(state => state.auth.user.token)
     useEffect(() => {
-        requestData('portfolio/en/work')
+        requestData(PATH)
             .then(data => setData(data))
             .catch(err => console.log(err))
     }, [])
 
     const navigate = useNavigate();
-    const handleEdit = () => {
+    const handleEdit = (id) => {
         // pass id and path to <Edit /> component as in APP.jsx
         navigate(`../edit/work/${id}`)
     }
-    const handleDelete = () => {
+    const handleDelete = async (id) => {
         deleteDataToken(PATH, token, id)
             .then(data => console.log(data))
             .then(() => navigate("/"))
@@ -162,4 +133,4 @@ export const About = () => {
     );
 }
 
-export default About
+export default Work

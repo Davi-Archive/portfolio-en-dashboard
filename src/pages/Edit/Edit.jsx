@@ -20,8 +20,6 @@ const Edit = () => {
   }
 
   useEffect(() => {
-    findOneDataById(`${form.path}`, id).then(data => setValue(data))
-
     //set visible camps by URL parameters
     if (path === 'about') {
       setForm({
@@ -81,7 +79,19 @@ const Edit = () => {
       })
     }
 
+    ///SELECT correct path to it's DATA
+    const PATHS = {
+      "about": 'portfolio/en/about',
+      "skills": 'portfolio/en/skills',
+      "work": 'portfolio/en/work',
+      "experiences": 'portfolio/en/experiences',
+    }
+    // Fill values on the loaded TExtfields
+    findOneDataById(`${PATHS[path]}`, id).then(data => setValue(data))
   }, [])
+
+
+
   const handleSubmit = (e) => {
     editDataToken(`${form.path}`, token, id, value).then(data => console.log(data))
     e.preventDefault()

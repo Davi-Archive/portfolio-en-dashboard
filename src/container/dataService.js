@@ -62,6 +62,7 @@ const editDataToken = async (path, token, id, data) => {
 // GET one data by it's ID
 const findOneDataById = async (path, id) => {
   const res = await axios.get(API_URL + path + "/" + id);
+  console.log(res.request.responseURL);
   return res.data;
 };
 

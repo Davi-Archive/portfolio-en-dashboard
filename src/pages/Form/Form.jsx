@@ -5,42 +5,40 @@ import {
     CardMedia,
     Avatar,
     CardContent,
-    Typography,
     IconButton,
     Box
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { motion } from 'framer-motion'
-import { requestDataToken, fallback } from '../../container/dataService';
+import { requestDataToken, fallback, deleteDataToken } from '../../container/dataService';
+import { motion } from "framer-motion";
 import "./Form.scss";
+
+const PATH = 'portfolio/contact/';
 
 export const Form = () => {
     const [data, setData] = useState(fallback)
     const navigate = useNavigate();
     const token = useSelector(state => state.auth.user.token)
     useEffect(() => {
-        requestDataToken('portfolio/contact', token)
+        requestDataToken(PATH, token)
             .then(data => setData(data))
             .catch(err => console.log(err))
     }, [])
-    console.log(data)
-    const handleEdit = () => {
-        // pass id and path to <Edit /> component as in APP.jsx
-        navigate(`../edit/about/${id}`)
-    }
-    const handleDelete = () => {
+    /*  const handleEdit = (id) => {
+         // pass id and path to <Edit /> component as in APP.jsx
+         navigate(`../edit/form/${id}`)
+     } */
+    const handleDelete = (id) => {
         deleteDataToken(PATH, token, id)
             .then(data => console.log(data))
-            .then(() => navigate("/"))
+            .then(() => navigate("/form"))
     }
     return (
         <div className='wrapper'>
             {""}
             {data.map((form, index) => (
-                <>
                 <Box key={index} marginTop={10} marginRight={3}>
                     <Card sx={{
                         width: "100%",
@@ -55,13 +53,7 @@ export const Form = () => {
                     }}>
                         <Box display="flex">
                             <IconButton
-                                sx={{ marginLeft: "auto" }}
-                                onClick={handleEdit}
-                            >
-                                <EditIcon color="warning" />
-                            </IconButton>
-                            <IconButton
-                                onClick={()=>{handleDelete(form._id)}}
+                                onClick={() => { handleDelete(form._id) }}
                             ><DeleteForeverIcon color="error" />
                             </IconButton>
                         </Box>
@@ -75,7 +67,7 @@ export const Form = () => {
                             subheader={new Date(form.updatedAt).toLocaleString('pt-BR')}
                         />
                         <CardContent>
-                            <div
+                            <motion.div
                                 whileInView={{ opacity: 1 }}
                                 whileHover={{ scale: 1.1 }}
                                 transition={{ duration: 0.5, type: "tween" }}
@@ -93,11 +85,10 @@ export const Form = () => {
                                     From:{form.where}
                                 </p>
 
-                            </div>
+                            </motion.div>
                         </CardContent>
                     </Card>
                 </Box >
-                </>
             ))
             }
         </div >

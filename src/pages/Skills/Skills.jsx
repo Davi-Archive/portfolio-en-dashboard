@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {
     Card,
     CardHeader,
-    CardMedia,
     Avatar,
     CardContent,
-    Typography,
     IconButton,
     Box
 } from '@mui/material';
@@ -14,46 +12,16 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion'
 import "./skills.scss";
-import { requestData } from '../../container/dataService';
+import { requestData, deleteDataToken, fallback } from '../../container/dataService';
+import { useSelector } from 'react-redux';
 
-
-const dataBlog = [
-    {
-        _id: 12777523,
-        name: "typescript",
-        bgColor: "fff000",
-        icon: "https://cdn.donmai.us/original/7e/a4/__black_alice_mon_musu_quest_drawn_by_raichi_ddq0246__7ea43624939be715fb584ad77cc006bf.png",
-    },
-    {
-        _id: 12777523,
-        name: "typescript",
-        bgColor: "fff000",
-        icon: "https://cdn.donmai.us/original/7e/a4/__black_alice_mon_musu_quest_drawn_by_raichi_ddq0246__7ea43624939be715fb584ad77cc006bf.png",
-    },
-    {
-        _id: 12777523,
-        name: "typescript",
-        bgColor: "fff000",
-        icon: "https://cdn.donmai.us/original/7e/a4/__black_alice_mon_musu_quest_drawn_by_raichi_ddq0246__7ea43624939be715fb584ad77cc006bf.png",
-    },
-    {
-        _id: 12777523,
-        name: "typescript",
-        bgColor: "fff000",
-        icon: "https://cdn.donmai.us/original/7e/a4/__black_alice_mon_musu_quest_drawn_by_raichi_ddq0246__7ea43624939be715fb584ad77cc006bf.png",
-    },
-    {
-        _id: 1277414127523,
-        name: "Loading",
-        bgColor: "fff000",
-        icon: "https://cdn.donmai.us/original/7e/a4/__black_alice_mon_musu_quest_drawn_by_raichi_ddq0246__7ea43624939be715fb584ad77cc006bf.png",
-    },
-]
+const PATH = 'portfolio/en/skills/';
 
 export const About = () => {
-    const [data, setData] = useState([])
+    const token = useSelector(state => state.auth.user.token)
+    const [data, setData] = useState(fallback)
     useEffect(() => {
-        requestData('portfolio/en/skills')
+        requestData(PATH)
             .then(data => setData(data))
             .catch(err => console.log(err))
     }, [])
@@ -66,7 +34,7 @@ export const About = () => {
     const handleDelete = (id) => {
         deleteDataToken(PATH, token, id)
             .then(data => console.log(data))
-            .then(() => navigate("/"))
+            .then(() => navigate("/skills"))
     }
     return (
         <div className='wrapper'>

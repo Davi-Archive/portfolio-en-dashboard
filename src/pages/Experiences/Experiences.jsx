@@ -22,7 +22,7 @@ const PATH = 'portfolio/en/experiences/';
 export const About = () => {
     const [data, setData] = useState([])
     useEffect(() => {
-        requestData('portfolio/en/experiences')
+        requestData(PATH)
             .then(data => setData(data))
             .catch(err => console.log(err))
     }, [])

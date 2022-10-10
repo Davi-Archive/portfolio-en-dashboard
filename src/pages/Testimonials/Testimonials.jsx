@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Card,
     CardHeader,
@@ -10,39 +10,17 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
-import { requestData } from '../../container/dataService';
+import { requestData, fallback } from '../../container/dataService';
 import "./Testimonials.scss";
 
-const dataBlog = [
-    {
-        _id: 12345,
-        imgUrl: "https://static1.personality-database.com/profile_images/6b2cea7df9d043c79f65a371f64cb61a.png",
-        name: "Loading",
-        company: "Retrieving Data",
-        feedback: "hi",
-    },
-    {
-        _id: 12345,
-        imgUrl: "https://static1.personality-database.com/profile_images/6b2cea7df9d043c79f65a371f64cb61a.png",
-        name: "Loading",
-        company: "Retrieving Data",
-        feedback: "ola",
-    },
-    {
-        _id: 12345,
-        imgUrl: "https://static1.personality-database.com/profile_images/6b2cea7df9d043c79f65a371f64cb61a.png",
-        name: "Loading",
-        company: "Retrieving Data",
-        feedback: "amigo",
-    },
-]
+const PATH = 'portfolio/en/testimonials';
 
 export const About = () => {
-
+    const [data, setData] = useState(fallback)
     const dateTransformed = new Date().toLocaleString('pt-BR')
     const navigate = useNavigate();
     useEffect(() => {
-        requestData('portfolio/en/testimonials')
+        requestData(PATH)
             .then(data => setData(data))
             .catch(err => console.log(err))
     }, [])
@@ -58,7 +36,7 @@ export const About = () => {
     return (
         <div className='wrapper'>
             {""}
-            {dataBlog.map((testimonial, index) => (
+            {data.map((testimonial, index) => (
                 <Box key={index} marginTop={10} marginRight={3}>
                     <Card sx={{
                         width: "100%",
@@ -98,7 +76,6 @@ export const About = () => {
                                     src={testimonial.imgUrl}
                                     alt={testimonial.name}
                                 />
-                                {console.log(testimonial.imgUrl)}
                                 <div className="app__testimonial-content">
                                     <p className="p-text">
                                         {testimonial.feedback}
