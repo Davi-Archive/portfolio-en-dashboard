@@ -40,12 +40,10 @@ export const About = () => {
         <div className='wrapper'>
             {""}
             {data.map((experience, index) => (
-                <Box key={index} marginTop={10} marginRight={3}>
+                <Box key={index}>
                     <Card sx={{
-                        width: "100%",
-                        marginLeft: '220px',
-                        marginRight: "auto",
-                        mt: 2,
+                        margin: 3,
+                        minWidth: '500px',
                         padding: 2,
                         boxShadow: "5px 5px 10px #ccc",
                         ":hover": {

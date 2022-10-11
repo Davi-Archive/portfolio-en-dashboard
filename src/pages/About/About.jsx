@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'
 import {
     Card,
     CardHeader,
@@ -42,11 +41,9 @@ export const About = () => {
         <div className='wrapper'>
             {""}
             {data.map((about, index) => (
-                <Box key={index} marginTop={10} marginRight={3}>
+                <Box key={index}>
                     <Card sx={{
-                        width: "100%",
-                        marginLeft: '220px',
-                        marginRight: "auto",
+                        margin: 4,
                         mt: 2,
                         padding: 2,
                         boxShadow: "5px 5px 10px #ccc",

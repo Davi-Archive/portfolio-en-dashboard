@@ -1,10 +1,5 @@
-.wrapper {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
 .app__testimonial-item {
-  width: 250px;
+  width: auto;
   min-height: auto;
   background-color: var(--white-color);
   display: flex;

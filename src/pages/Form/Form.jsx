@@ -39,12 +39,10 @@ export const Form = () => {
         <div className='wrapper'>
             {""}
             {data.map((form, index) => (
-                <Box key={index} marginTop={10} marginRight={3}>
+                <Box key={index}>
                     <Card sx={{
-                        width: "100%",
-                        marginLeft: '220px',
-                        marginRight: "auto",
-                        mt: 2,
+                        minWidth: "500px",
+                        margin: 2,
                         padding: 2,
                         boxShadow: "5px 5px 10px #ccc",
                         ":hover": {
