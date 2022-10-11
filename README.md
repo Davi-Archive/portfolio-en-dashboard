@@ -1,8 +1,6 @@
+
+
 https://user-images.githubusercontent.com/107776531/194973139-ccc144e4-33e6-4af8-b8a1-a7e23aa5f689.mp4
-
-# portfolio-en-dashboard
-
-
 
 ## Introduction
 
@@ -17,13 +15,15 @@ This site is currently live. [View the Live Website]
 
 Javascript
 
-Node
+SASS
 
-Express
+Axios
 
-MongoDB
+MaterialUI
 
-Colors
+Framer Motion
+
+Toast 
 
 ### Quality Checks
 
