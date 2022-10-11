@@ -15,12 +15,15 @@ import "./Experiences.scss";
 import ReactTooltip from "react-tooltip";
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { requestData } from '../../container/dataService';
+import { requestData, deleteDataToken } from '../../container/dataService';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const PATH = 'portfolio/en/experiences/';
 
-export const About = () => {
+export const Experiences = () => {
     const [data, setData] = useState([])
+    const token = useSelector(state => state.auth.user.token)
     useEffect(() => {
         requestData(PATH)
             .then(data => setData(data))
@@ -33,8 +36,11 @@ export const About = () => {
     }
     const handleDelete = (id) => {
         deleteDataToken(PATH, token, id)
-            .then(data => console.log(data))
-            .then(() => navigate("/"))
+            .then(data => {
+                toast.success(data.message)
+            })
+            .then(() => navigate(0))
+            .catch(err => toast.error(err.message))
     }
     return (
         <div className='wrapper'>
@@ -110,4 +116,4 @@ export const About = () => {
     );
 }
 
-export default About
+export default Experiences

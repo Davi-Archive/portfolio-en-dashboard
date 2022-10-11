@@ -5,21 +5,26 @@ import { useState } from 'react';
 import { initialStateValue, initialState, aboutState } from '../../container/fallbackObj';
 import { createDataToken } from '../../container/dataService'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify';
 
 const Dashboard = () => {
   const [form, setForm] = useState(aboutState)
   const [value, setValue] = useState(initialStateValue)
   const token = useSelector(state => state.auth.user.token)
+
   const handleSubmit = (e) => {
     createDataToken(form.path, token, value)
-      .then(data => {setForm((prevState) => ({
-        ...prevState,
-        ButtonSelected: data.msg,
-      }))
-      console.log(data)
-    })
+      .then(data => {
+        setForm((prevState) => ({
+          ...prevState,
+        }))
+        toast.success(`${form.ButtonSelected} was sucessfully created!`)
+        console.log(data)
+      })
+      .catch(err => toast.error(JSON.stringify(err.message)))
     e.preventDefault()
   }
+
   const handleChange = (e) => {
     setValue((prevState) => ({
       ...prevState,
@@ -122,6 +127,7 @@ const Dashboard = () => {
                   year: true,
                   icon: true,
                   bgColor: true,
+                  desc:true,
                   ButtonSelected: 'Experiences',
                   path: 'portfolio/en/experiences'
                 })

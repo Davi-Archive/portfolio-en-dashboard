@@ -30,8 +30,11 @@ export const About = () => {
     }
     const handleDelete = () => {
         deleteDataToken(PATH, token, id)
-            .then(data => console.log(data))
-            .then(() => navigate("/"))
+            .then(data => {
+                toast.success(data.message)
+            })
+            .then(() => navigate(0))
+            .catch(err => toast.error(err.message))
     }
     return (
         <div className='wrapper'>

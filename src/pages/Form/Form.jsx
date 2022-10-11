@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
     Card,
     CardHeader,
-    CardMedia,
     Avatar,
     CardContent,
     IconButton,
@@ -32,8 +31,11 @@ export const Form = () => {
      } */
     const handleDelete = (id) => {
         deleteDataToken(PATH, token, id)
-            .then(data => console.log(data))
-            .then(() => navigate("/form"))
+            .then(data => {
+                toast.success(data.message)
+            })
+            .then(() => navigate(0))
+            .catch(err => toast.error(err.message))
     }
     return (
         <div className='wrapper'>

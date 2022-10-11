@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion'
 import { deleteDataToken, requestData } from '../../container/dataService'
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import "./About.scss";
 
 const PATH = 'portfolio/en/about/';
@@ -34,8 +35,13 @@ export const About = () => {
     }
     const handleDelete = async (id) => {
         deleteDataToken(PATH, token, id)
-            .then(data => console.log(data))
-            .then(() => navigate("/"))
+            .then(data => {
+                toast.success(data.message)
+                console.log(data)
+            })
+            .then(() => {
+                navigate(0)   // reload Page
+            })
     }
     return (
         <div className='wrapper'>

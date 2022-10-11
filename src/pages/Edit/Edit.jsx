@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import './Edit.scss'
 import { Box, Button, Typography } from '@mui/material'
 import { initialStateValue, initialState, aboutState } from '../../container/fallbackObj';
 import { editDataToken, findOneDataById } from '../../container/dataService'
+import { toast } from 'react-toastify'
+import './Edit.scss'
 
 const Edit = () => {
+  const navigate = useNavigate()
   const [form, setForm] = useState(aboutState)
   const [value, setValue] = useState(initialStateValue)
   const { path, id } = useParams()
@@ -93,7 +95,16 @@ const Edit = () => {
 
 
   const handleSubmit = (e) => {
-    editDataToken(`${form.path}`, token, id, value).then(data => console.log(data))
+    editDataToken(`${form.path}`, token, id, value)
+      .then(data => {
+        if (!data) {
+          toast.error('Error occured')
+        }
+
+        toast.success("Successfully updated")
+        navigate(0)
+      })
+      .catch(err => toast.error(err.message))
     e.preventDefault()
   }
 

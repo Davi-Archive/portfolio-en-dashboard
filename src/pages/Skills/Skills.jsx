@@ -17,7 +17,7 @@ import { useSelector } from 'react-redux';
 
 const PATH = 'portfolio/en/skills/';
 
-export const About = () => {
+export const Skills = () => {
     const token = useSelector(state => state.auth.user.token)
     const [data, setData] = useState(fallback)
     useEffect(() => {
@@ -33,8 +33,11 @@ export const About = () => {
     }
     const handleDelete = (id) => {
         deleteDataToken(PATH, token, id)
-            .then(data => console.log(data))
-            .then(() => navigate("/skills"))
+            .then(data => {
+                toast.success(data.message)
+            })
+            .then(() => navigate(0))
+            .catch(err => toast.error(err.message))
     }
     return (
         <div className='wrapper'>
@@ -94,4 +97,4 @@ export const About = () => {
     );
 }
 
-export default About
+export default Skills
