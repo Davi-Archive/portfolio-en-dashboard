@@ -14,6 +14,7 @@ import { motion } from 'framer-motion'
 import "./Skills.scss";
 import { requestData, deleteDataToken, fallback } from '../../container/dataService';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const PATH = 'portfolio/en/skills/';
 

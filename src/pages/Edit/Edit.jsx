@@ -87,6 +87,7 @@ const Edit = () => {
       "skills": 'portfolio/en/skills',
       "work": 'portfolio/en/work',
       "experiences": 'portfolio/en/experiences',
+      "testimonials": 'portfolio/en/testimonials',
     }
     // Fill values on the loaded TExtfields
     findOneDataById(`${PATHS[path]}`, id).then(data => setValue(data))
@@ -102,7 +103,7 @@ const Edit = () => {
         }
 
         toast.success("Successfully updated")
-        navigate(0)
+        navigate(`/${path}`)
       })
       .catch(err => toast.error(err.message))
     e.preventDefault()

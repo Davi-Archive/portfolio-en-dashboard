@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {
     Card,
     CardHeader,
-    CardMedia,
     Avatar,
     CardContent,
-    Typography,
     IconButton,
     Box
 } from '@mui/material';
@@ -14,11 +12,12 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { AiFillEye, AiFillGithub } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion'
-import { fallback, requestData } from '../../container/dataService';
-import "./Work.scss";
+import { fallback, requestData, deleteDataToken } from '../../container/dataService';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify'
+import "./Work.scss";
 
-const PATH = 'portfolio/en/work'
+const PATH = 'portfolio/en/work/'
 
 export const Work = () => {
     const [data, setData] = useState(fallback)
