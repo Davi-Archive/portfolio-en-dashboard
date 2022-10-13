@@ -52,5 +52,5 @@ davi4alves@gmail.com
 
 
 
-[View the Live Website]:https://portfolio-en-server.vercel.app/
+[View the Live Website]:https://dashboard-portfolio.netlify.app/
 
